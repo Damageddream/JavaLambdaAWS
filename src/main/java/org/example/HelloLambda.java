@@ -1,7 +1,13 @@
 package org.example;
 
 public class HelloLambda {
-    public String handleRequest(String name){
+    //String input
+    public String handleBoolean(String name){
         return "Hello "+name;
+    }
+
+    //boolean
+    public boolean handleBoolean(boolean flag){
+        return !flag;
     }
 }
