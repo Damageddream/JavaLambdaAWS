@@ -24,26 +24,27 @@ public class S3EventHandler implements RequestHandler<S3Event, Boolean> {
     @Override
     public Boolean handleRequest(S3Event input, Context context) {
         final LambdaLogger lambdaLogger = context.getLogger();
+        throw new RuntimeException("some error");
 
-        if (input.getRecords().isEmpty()) {
-            lambdaLogger.log("No records found");
-            return false;
-        }
-        for (S3EventNotification.S3EventNotificationRecord record : input.getRecords()) {
-            String bucketName = record.getS3().getBucket().getName();
-            String objectKey = record.getS3().getObject().getKey();
-            S3Object s3Object = s3Client.getObject(bucketName, objectKey);
-            S3ObjectInputStream inpustream = s3Object.getObjectContent();
-            try (final BufferedReader br = new BufferedReader(new InputStreamReader(
-                    inpustream, StandardCharsets.UTF_8
-            ))) {
-                br.lines().skip(1)
-                        .forEach(line -> lambdaLogger.log(line + "\n"));
-            } catch (IOException e) {
-                lambdaLogger.log("Error occured in lambda: " + e.getMessage());
-                return false;
-            }
-        }
-        return null;
+//        if (input.getRecords().isEmpty()) {
+//            lambdaLogger.log("No records found");
+//            return false;
+//        }
+//        for (S3EventNotification.S3EventNotificationRecord record : input.getRecords()) {
+//            String bucketName = record.getS3().getBucket().getName();
+//            String objectKey = record.getS3().getObject().getKey();
+//            S3Object s3Object = s3Client.getObject(bucketName, objectKey);
+//            S3ObjectInputStream inpustream = s3Object.getObjectContent();
+//            try (final BufferedReader br = new BufferedReader(new InputStreamReader(
+//                    inpustream, StandardCharsets.UTF_8
+//            ))) {
+//                br.lines().skip(1)
+//                        .forEach(line -> lambdaLogger.log(line + "\n"));
+//            } catch (IOException e) {
+//                lambdaLogger.log("Error occured in lambda: " + e.getMessage());
+//                return false;
+//            }
+//        }
+//        return null;
     }
 }
